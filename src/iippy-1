@@ -1,0 +1,79 @@
+Python 3.4.0 (default, Apr 11 2014, 13:05:18) 
+[GCC 4.8.2] on linux
+Type "copyright", "credits" or "license()" for more information.
+>>> import simplegui
+import random
+import math
+
+
+remaining_guesses = 7
+range_num = 100
+
+def new_game():
+
+    print "This is a new game. Range is from 0 to 100"
+    print "The number of remaining guesses is 7"
+    print
+    global secret_number
+    global remaining_guesses
+    remaining_guesses = 7
+    secret_number = random.randrange(0, 100)
+
+def range100():
+
+    print "This is a New game. Range is from 0 to 100"
+    print "Number of remaining guesses is 7"
+    print
+    global secret_number
+    global remaining_guesses
+    global num_range
+    remaining_guesses = 7
+    secret_number= random.randrange(0, 100)
+    num_range=100
+
+    
+def range1000():
+  
+    print "New game. Range is from 0 to 1000"
+    print "Number of remaining guesses is 10"
+    print
+    global secret_number
+    global remaining_guesses
+    global num_range
+    remaining_guesses = 10
+    secret_number= random.randrange(0, 1000)
+    num_range=1000
+    
+def input_guess(guess):
+    
+    global remaining_guesses    
+    remaining_guesses =remaining_guesses - 1
+    
+    print "Guess was ", int(guess)    
+    if (remaining_guesses==0 and (int(guess)!= secret_number)):
+        print "Number of remaining guesses is 0"
+        print"You ran out of guesses.  The number was ",secret_number
+        print
+        if (range_num ==100): range100()
+        else: range1000()
+        
+    else:
+        print "Number of remaining guesses is", remaining_guesses
+        if (int(guess)>secret_number):	
+            print "Lower!"
+        elif (int(guess)<secret_number): 
+            print "Higher!"
+        else: 
+            print "Correct!"
+            if(range_num ==100): range100()
+            else: range1000()
+        
+frame = simplegui.create_frame("Guess the number",	200,200)
+
+frame.add_button("Range is [0, 100)", range100, 200)
+frame.add_button("Range is [0, 1000)", range1000, 200)
+frame.add_input("Enter a guess", input_guess, 100)
+
+new_game()
+
+frame.start()
